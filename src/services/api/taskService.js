@@ -109,7 +109,7 @@ export const taskService = {
     }
   },
 
-  async create(taskData) {
+async create(taskData) {
     await delay(400)
     
     try {
@@ -119,16 +119,24 @@ export const taskService = {
       }
 
       // Transform UI format to database fields
+      const recordData = {
+        Name: taskData.title, // Map title to Name field
+        title_c: taskData.title,
+        description_c: taskData.description || "",
+        priority_c: taskData.priority,
+        status_c: taskData.status,
+        completed_at_c: taskData.completedAt || null,
+        Tags: taskData.tags || ""
+      };
+
+      // Handle file data if present
+      if (taskData.files && taskData.files.length > 0 && window.ApperSDK) {
+        const { ApperFileUploader } = window.ApperSDK;
+        recordData.files_c = ApperFileUploader.toCreateFormat(taskData.files);
+      }
+
       const params = {
-        records: [{
-          Name: taskData.title, // Map title to Name field
-          title_c: taskData.title,
-          description_c: taskData.description || "",
-          priority_c: taskData.priority,
-          status_c: taskData.status,
-          completed_at_c: taskData.completedAt || null,
-          Tags: taskData.tags || ""
-        }]
+        records: [recordData]
       }
 
       const response = await apperClient.createRecord("task_c", params)

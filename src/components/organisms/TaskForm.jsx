@@ -1,15 +1,16 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { motion } from "framer-motion"
 import Button from "@/components/atoms/Button"
 import Input from "@/components/atoms/Input"
-import Select from "@/components/atoms/Select"
 import Textarea from "@/components/atoms/Textarea"
-import ApperIcon from "@/components/ApperIcon"
-
+import Select from "@/components/atoms/Select"
+import { ApperIcon } from "@/components/ApperIcon"
+import ApperFileFieldComponent from "@/components/atoms/ApperFileFieldComponent"
 const TaskForm = ({ onAddTask }) => {
   const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
+const [description, setDescription] = useState("")
   const [priority, setPriority] = useState("medium")
+  const [uploadedFiles, setUploadedFiles] = useState([])
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -34,17 +35,26 @@ const handleSubmit = async (e) => {
     setIsSubmitting(true)
     
     try {
+// Get files from the file field
+      let files = [];
+      if (window.ApperSDK) {
+        const { ApperFileUploader } = window.ApperSDK;
+        files = await ApperFileUploader.FileField.getFiles('files_c') || uploadedFiles;
+      }
+
       await onAddTask({
         title: title.trim(),
         description: description.trim(),
         priority,
         status: "active",
         createdAt: new Date().toISOString(),
-        completedAt: null
+        completedAt: null,
+        files: files
       })
       
       // Reset form
-      setTitle("")
+setTitle("")
+      setUploadedFiles([])
       setDescription("")
       setPriority("medium")
       setErrors({})
@@ -147,7 +157,23 @@ const handleSubmit = async (e) => {
               </div>
             </div>
           </div>
-
+<div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">
+              Files
+            </label>
+            <ApperFileFieldComponent
+              elementId="files_c"
+              config={{
+                fieldKey: 'files_c',
+                fieldName: 'files_c',
+                tableName: 'task_c',
+                apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+                apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY,
+                existingFiles: uploadedFiles,
+                fileCount: uploadedFiles.length
+              }}
+            />
+          </div>
           <div className="flex justify-end pt-4">
             <Button
               type="submit"
