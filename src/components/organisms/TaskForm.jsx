@@ -41,7 +41,7 @@ const handleSubmit = async (e) => {
         const { ApperFileUploader } = window.ApperSDK;
         files = await ApperFileUploader.FileField.getFiles('files_c') || uploadedFiles;
       }
-
+console.log("files:",files)
       await onAddTask({
         title: title.trim(),
         description: description.trim(),
