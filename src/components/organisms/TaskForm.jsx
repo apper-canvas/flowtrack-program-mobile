@@ -4,7 +4,7 @@ import Button from "@/components/atoms/Button"
 import Input from "@/components/atoms/Input"
 import Textarea from "@/components/atoms/Textarea"
 import Select from "@/components/atoms/Select"
-import { ApperIcon } from "@/components/ApperIcon"
+import ApperIcon from "@/components/ApperIcon"
 import ApperFileFieldComponent from "@/components/atoms/ApperFileFieldComponent"
 const TaskForm = ({ onAddTask }) => {
   const [title, setTitle] = useState("")
