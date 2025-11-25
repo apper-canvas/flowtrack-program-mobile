@@ -7,7 +7,7 @@ import ApperIcon from "@/components/ApperIcon"
 
 const TaskCard = ({ task, onUpdate, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false)
-  const [editTitle, setEditTitle] = useState(task.title)
+const [editTitle, setEditTitle] = useState(task.title)
   const [editDescription, setEditDescription] = useState(task.description || "")
 
   const handleToggleComplete = () => {
@@ -114,7 +114,7 @@ const TaskCard = ({ task, onUpdate, onDelete }) => {
                   "text-lg font-semibold text-slate-900 leading-tight",
                   isCompleted && "line-through text-slate-500"
                 )}>
-                  {task.title}
+{task.title}
                 </h3>
                 {task.description && (
                   <p className={cn(
@@ -129,14 +129,14 @@ const TaskCard = ({ task, onUpdate, onDelete }) => {
           </div>
         </div>
         
-        <Badge variant={getPriorityColor(task.priority)}>
+<Badge variant={getPriorityColor(task.priority)}>
           {task.priority}
         </Badge>
       </div>
 
       <div className="flex items-center justify-between pt-2 border-t border-slate-100">
         <div className="text-xs text-slate-500 space-y-1">
-          <div>Created {format(new Date(task.createdAt), "MMM dd, yyyy")}</div>
+<div>Created {format(new Date(task.createdAt), "MMM dd, yyyy")}</div>
           {isCompleted && task.completedAt && (
             <div className="text-success-600">
               Completed {format(new Date(task.completedAt), "MMM dd, yyyy")}

@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { toast } from "react-toastify"
-import TaskForm from "@/components/organisms/TaskForm"
-import TaskList from "@/components/organisms/TaskList"
-import FilterControls from "@/components/molecules/FilterControls"
-import SortControls from "@/components/molecules/SortControls"
-import CompletionAnimation from "@/components/organisms/CompletionAnimation"
-import Empty from "@/components/ui/Empty"
-import { taskService } from "@/services/api/taskService"
-import ApperIcon from "@/components/ApperIcon"
+import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { toast } from "react-toastify";
+import { taskService } from "@/services/api/taskService";
+import ApperIcon from "@/components/ApperIcon";
+import Loading from "@/components/ui/Loading";
+import Empty from "@/components/ui/Empty";
+import TaskForm from "@/components/organisms/TaskForm";
+import CompletionAnimation from "@/components/organisms/CompletionAnimation";
+import TaskList from "@/components/organisms/TaskList";
+import FilterControls from "@/components/molecules/FilterControls";
+import SortControls from "@/components/molecules/SortControls";
 
 const TaskFlow = () => {
   const [tasks, setTasks] = useState([])
@@ -35,8 +36,7 @@ const TaskFlow = () => {
   useEffect(() => {
     loadTasks()
   }, [])
-
-  const handleAddTask = async (taskData) => {
+const handleAddTask = async (taskData) => {
     try {
       const newTask = await taskService.create(taskData)
       setTasks(prev => [newTask, ...prev])

@@ -17,7 +17,7 @@ const SortControls = ({ currentSort, onSortChange }) => {
           value={currentSort}
           onChange={(e) => onSortChange(e.target.value)}
           className="text-sm"
-        >
+>
           <option value="created">Created Date</option>
           <option value="priority">Priority</option>
         </Select>

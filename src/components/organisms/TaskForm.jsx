@@ -23,7 +23,7 @@ const TaskForm = ({ onAddTask }) => {
     return newErrors
   }
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault()
     
     const formErrors = validateForm()

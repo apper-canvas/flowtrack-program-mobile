@@ -9,7 +9,7 @@ const TaskList = ({ tasks, onUpdateTask, onDeleteTask }) => {
       className="space-y-4"
     >
       <AnimatePresence mode="popLayout">
-        {tasks.map((task, index) => (
+{tasks.map((task, index) => (
           <motion.div
             key={task.Id}
             initial={{ opacity: 0, y: 20 }}
